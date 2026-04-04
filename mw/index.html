@@ -209,6 +209,24 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
+    .wallet-link {
+      display: block;
+      max-width: 280px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .wallet-link:hover {
+      color: var(--text);
+    }
+
     /* ─── QR section ─── */
     .qr-section {
       text-align: center;
@@ -308,6 +326,11 @@
   <!-- Save Contact -->
   <div class="save-btn-wrap">
     <button class="save-btn" onclick="saveContact()">Save Contact</button>
+  </div>
+
+  <!-- Add to Wallet -->
+  <div class="save-btn-wrap">
+    <a href="https://www.pass2u.net/p/QeWnn-yuW6uz?openExternalBrowser=1" target="_blank" rel="noopener" class="wallet-link">Add to Apple Wallet</a>
   </div>
 
   <!-- QR Code -->

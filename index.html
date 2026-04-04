@@ -32,6 +32,7 @@
     position: relative;
   }
 
+  /* Eggshell texture */
   body::before {
     content: '';
     position: fixed;
@@ -43,6 +44,7 @@
     z-index: 1;
   }
 
+  /* Diagonal sheen */
   body::after {
     content: '';
     position: fixed;
@@ -73,24 +75,6 @@
   .header-email { font-family: var(--sans); font-weight: 300; font-size: 0.62rem; letter-spacing: 0.12em; color: var(--text-dim); text-decoration: none; transition: color 0.4s; }
   .header-email:hover { color: var(--text); }
 
-  /* Dial — simple fixed CSS positioning */
-  .dial-bg {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -55%);
-    width: min(80vh, 80vw);
-    height: min(80vh, 80vw);
-    max-width: 640px;
-    max-height: 640px;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0;
-    animation: dialReveal 3s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
-  }
-
-  .dial-bg svg { width: 100%; height: 100%; }
-
   .main {
     flex: 1;
     display: flex;
@@ -103,6 +87,27 @@
     z-index: 4;
   }
 
+  /* Radial spotlight */
+  .main::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 55vw;
+    height: 55vh;
+    max-width: 700px;
+    max-height: 500px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(180, 185, 200, 0.04) 0%,
+      rgba(160, 165, 180, 0.02) 30%,
+      transparent 65%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+
   .identity-block {
     display: flex;
     flex-direction: column;
@@ -112,7 +117,7 @@
     animation: fadeUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
   }
 
-  .numerals { display: flex; align-items: baseline; margin-bottom: 0.15rem; }
+  .numerals { display: flex; align-items: baseline; margin-bottom: 0.6rem; }
   .n1 { font-family: var(--serif); font-weight: 400; font-size: clamp(5.5rem, 13vw, 10rem); color: var(--text); line-height: 0.82; }
   .n3 { font-family: var(--serif); font-weight: 600; font-size: clamp(5.5rem, 13vw, 10rem); color: var(--text); line-height: 0.82; }
   .n8 { font-family: var(--serif); font-weight: 700; font-size: clamp(5.5rem, 13vw, 10rem); color: var(--text); line-height: 0.82; }
@@ -163,7 +168,6 @@
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes dialReveal { from { opacity: 0; transform: translate(-50%, -55%) scale(0.95); } to { opacity: 1; transform: translate(-50%, -55%) scale(1); } }
 
   @media (max-width: 600px) {
     .header { padding: 1.5rem; }
@@ -173,16 +177,6 @@
 </style>
 </head>
 <body>
-
-<div class="dial-bg">
-  <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="200" cy="200" r="195" fill="none" stroke="rgba(216,219,226,0.04)" stroke-width="0.5"/>
-    <line x1="285" y1="53" x2="276.5" y2="68" stroke="rgba(216,219,226,0.38)" stroke-width="2" stroke-linecap="round"/>
-    <line x1="370" y1="200" x2="352" y2="200" stroke="rgba(216,219,226,0.38)" stroke-width="2" stroke-linecap="round"/>
-    <line x1="53" y1="285" x2="67" y2="277" stroke="rgba(216,219,226,0.38)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="200" cy="200" r="2" fill="rgba(216,219,226,0.06)"/>
-  </svg>
-</div>
 
 <div class="page">
   <header class="header">

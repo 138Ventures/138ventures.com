@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>138 Ventures</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Libre+Franklin:wght@200;300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Libre+Franklin:wght@200;300;400&display=swap');
 
   :root {
     --bg: #0A0C11;
@@ -32,7 +32,6 @@
     position: relative;
   }
 
-  /* Eggshell texture */
   body::before {
     content: '';
     position: fixed;
@@ -44,7 +43,6 @@
     z-index: 1;
   }
 
-  /* Diagonal sheen */
   body::after {
     content: '';
     position: fixed;
@@ -87,7 +85,6 @@
     z-index: 4;
   }
 
-  /* Radial spotlight */
   .main::before {
     content: '';
     position: absolute;
@@ -98,12 +95,7 @@
     height: 55vh;
     max-width: 700px;
     max-height: 500px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(180, 185, 200, 0.04) 0%,
-      rgba(160, 165, 180, 0.02) 30%,
-      transparent 65%
-    );
+    background: radial-gradient(ellipse at center, rgba(180,185,200,0.04) 0%, rgba(160,165,180,0.02) 30%, transparent 65%);
     pointer-events: none;
     z-index: -1;
   }
@@ -118,9 +110,22 @@
   }
 
   .numerals { display: flex; align-items: baseline; margin-bottom: 0.6rem; }
+
   .n1 { font-family: var(--serif); font-weight: 400; font-size: clamp(5.5rem, 13vw, 10rem); color: var(--text); line-height: 0.82; }
   .n3 { font-family: var(--serif); font-weight: 600; font-size: clamp(5.5rem, 13vw, 10rem); color: var(--text); line-height: 0.82; }
   .n8 { font-family: var(--serif); font-weight: 700; font-size: clamp(5.5rem, 13vw, 10rem); color: var(--text); line-height: 0.82; }
+
+  /* Shimmer: staggered glow, subtle but visible */
+  .n1 { animation: fadeUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards, shimmer 12s ease-in-out 4s infinite; }
+  .n3 { animation: fadeUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards, shimmer 12s ease-in-out 5s infinite; }
+  .n8 { animation: fadeUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards, shimmer 12s ease-in-out 6s infinite; }
+
+  @keyframes shimmer {
+    0% { color: #D8DBE2; text-shadow: none; }
+    15% { color: #FFFFFF; text-shadow: 0 0 12px rgba(255,255,255,0.15); }
+    30% { color: #D8DBE2; text-shadow: none; }
+    100% { color: #D8DBE2; text-shadow: none; }
+  }
 
   .ventures {
     font-family: var(--sans);
@@ -173,6 +178,10 @@
     .header { padding: 1.5rem; }
     .mark-v { display: none; }
     .footer { padding: 1.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .n1, .n3, .n8 { animation: fadeUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards !important; }
   }
 </style>
 </head>

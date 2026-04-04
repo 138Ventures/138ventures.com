@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0C11">
+  <title>Dr Markus Wolf — 138 Ventures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Libre+Franklin:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:          #0A0C11;
+      --text:        #D8DBE2;
+      --text-mid:    #B0B4BD;
+      --text-dim:    #949AA5;
+      --text-quiet:  #7D828D;
+      --border:      rgba(255, 255, 255, 0.06);
+      --surface:     rgba(255, 255, 255, 0.03);
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Eggshell micro-texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='40' height='40' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 40px 40px;
+      background-repeat: repeat;
+    }
+
+    /* Diagonal sheen */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(200, 205, 215, 0.012) 40%,
+        rgba(200, 205, 215, 0.022) 60%,
+        transparent 100%
+      );
+    }
+
+    /* All content above textures */
+    .card {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      min-height: calc(100vh - 4rem);
+    }
+
+    /* ─── Header ─── */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .wordmark .n1 { font-weight: 400; }
+    .wordmark .n3 { font-weight: 600; }
+    .wordmark .n8 { font-weight: 700; }
+
+    .ventures-label {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 200;
+      font-size: 0.55rem;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.35rem;
+      padding-left: 0.55em; /* optical compensation for letter-spacing */
+    }
+
+    /* ─── Identity ─── */
+    .identity {
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    .identity-name {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 1.2rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .identity-title {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 200;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 0.35rem;
+      letter-spacing: 0.05em;
+    }
+
+    .divider {
+      width: 100%;
+      max-width: 200px;
+      height: 1px;
+      background: var(--border);
+      border: none;
+      margin: 1.5rem auto;
+    }
+
+    /* ─── Contact ─── */
+    .contact {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact a {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.3s ease;
+      display: block;
+      padding: 0.15rem 0;
+    }
+
+    .contact a:hover {
+      color: var(--text);
+    }
+
+    /* ─── Save button ─── */
+    .save-btn-wrap {
+      width: 100%;
+      max-width: 280px;
+      margin-bottom: 2.5rem;
+    }
+
+    .save-btn {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.8rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .save-btn:hover {
+      background: var(--surface);
+    }
+
+    .save-btn:active {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* ─── QR section ─── */
+    .qr-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .qr-label {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 200;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-quiet);
+      margin-bottom: 0.75rem;
+      padding-left: 0.2em;
+    }
+
+    .qr-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-container svg {
+      width: 120px;
+      height: 120px;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      margin-top: auto;
+      text-align: center;
+      padding-top: 2rem;
+    }
+
+    .footer-location {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 200;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--text-quiet);
+      margin-bottom: 0.5rem;
+      padding-left: 0.3em;
+    }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 0.65rem;
+      color: var(--text-quiet);
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 390px) {
+      .wordmark { font-size: 2.5rem; }
+    }
+
+    @media (min-height: 900px) {
+      body {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="wordmark">
+      <span class="n1">1</span><span class="n3">3</span><span class="n8">8</span>
+    </div>
+    <div class="ventures-label">Ventures</div>
+  </header>
+
+  <!-- Identity -->
+  <div class="identity">
+    <div class="identity-name">Dr Markus Wolf</div>
+    <div class="identity-title">138 Ventures Pte. Ltd.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Contact -->
+  <div class="contact">
+    <a href="tel:+6592967699">+65 9296 7699</a>
+    <a href="mailto:markus@138ventures.com">markus@138ventures.com</a>
+    <a href="https://138ventures.com" target="_blank" rel="noopener">138ventures.com</a>
+  </div>
+
+  <!-- Save Contact -->
+  <div class="save-btn-wrap">
+    <button class="save-btn" onclick="saveContact()">Save Contact</button>
+  </div>
+
+  <!-- QR Code -->
+  <div class="qr-section">
+    <div class="qr-label">Scan to save</div>
+    <div class="qr-container" id="qr-container">
+      <!-- QR code rendered by JS below -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-location">Singapore</div>
+    <div class="footer-tagline">Enduring prosperity. Built over time.</div>
+  </footer>
+
+</div>
+
+<script>
+// ─── vCard download ───────────────────────────────────────────────────────────
+function saveContact() {
+  const vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:Wolf;Markus;;;',
+    'FN:Dr Markus Wolf',
+    'ORG:138 Ventures Pte. Ltd.',
+    'TITLE:',
+    'TEL;TYPE=CELL:+6592967699',
+    'EMAIL:markus@138ventures.com',
+    'URL:https://138ventures.com',
+    'ADR;TYPE=WORK:;;;;;;Singapore',
+    'NOTE:138 Ventures — Beyond wealth. Toward prosperity.',
+    'END:VCARD'
+  ].join('\r\n');
+  const blob = new Blob([vcard], { type: 'text/vcard' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Markus-Wolf-138-Ventures.vcf';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── Minimal QR Code generator ───────────────────────────────────────────────
+// Self-contained QR encoder (Mode: Byte, ECC: M, Version auto-selects)
+// Renders as inline SVG with modules in #949AA5 on transparent background.
+
+(function() {
+  'use strict';
+
+  // Reed-Solomon GF(256) tables
+  const EXP = new Uint8Array(512);
+  const LOG  = new Uint8Array(256);
+  (function buildGF() {
+    let x = 1;
+    for (let i = 0; i < 255; i++) {
+      EXP[i] = x; LOG[x] = i;
+      x = x << 1; if (x > 255) x ^= 0x11D;
+    }
+    for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  })();
+
+  function gfMul(a, b) { return (a && b) ? EXP[LOG[a] + LOG[b]] : 0; }
+  function gfPoly(deg) {
+    let p = [1];
+    for (let i = 0; i < deg; i++) {
+      const r = [1, EXP[i]];
+      const res = new Array(p.length + 1).fill(0);
+      for (let a = 0; a < p.length; a++)
+        for (let b = 0; b < r.length; b++)
+          res[a + b] ^= gfMul(p[a], r[b]);
+      p = res;
+    }
+    return p;
+  }
+  function rsEncode(data, eclen) {
+    const gen = gfPoly(eclen);
+    const msg = data.concat(new Array(eclen).fill(0));
+    for (let i = 0; i < data.length; i++) {
+      const coef = msg[i];
+      if (coef) for (let j = 0; j < gen.length; j++) msg[i + j] ^= gfMul(gen[j], coef);
+    }
+    return msg.slice(data.length);
+  }
+
+  // QR version/EC table: [version, ecLevel, dataCodewords, ecCodewordsPerBlock, blocks]
+  // Using Version 3, ECC M (28 data codewords, 26 EC per block, 2 blocks)
+  // and Version 4, ECC M (32 data codewords, 24 EC each, 2 blocks)
+  // and Version 2, ECC M (16 data, 22 EC, 1 block)
+  // Minimal table for byte mode, ECC M, versions 1-6
+  const EC_TABLE = [
+    // [version, totalCW, dataCW, ecCWperBlock, numBlocks]
+    [1,  26, 16, 10, 1],
+    [2,  44, 28, 16, 1],
+    [3,  70, 44, 26, 2],
+    [4, 100, 64, 18, 2],
+    [5, 134, 86, 24, 2],
+    [6, 172,108, 16, 4],
+  ];
+
+  // Alignment pattern centers by version (v1 has none)
+  const ALIGN = [[], [], [6,18], [6,22], [6,26], [6,30], [6,34]];
+
+  // Format info strings for ECC M, mask patterns 0-7
+  const FORMAT_M = [
+    0b101010000010010, 0b101000100100101, 0b101111001111100, 0b101101101001011,
+    0b100010111111001, 0b100000011001110, 0b100111110010111, 0b100101010100000,
+  ];
+
+  function encodeQR(text) {
+    const bytes = [];
+    for (let i = 0; i < text.length; i++) {
+      const c = text.charCodeAt(i);
+      if (c > 0x7FF) { bytes.push(0xEF, 0xBF, 0xBD); }
+      else if (c > 0x7F) { bytes.push(0xC0 | (c >> 6), 0x80 | (c & 0x3F)); }
+      else bytes.push(c);
+    }
+    const len = bytes.length;
+
+    // Pick version
+    let row = null;
+    for (const r of EC_TABLE) { if (r[2] >= len + 3) { row = r; break; } }
+    if (!row) { renderPlaceholder('URL too long'); return; }
+    const [version, totalCW, dataCW, ecPerBlock, numBlocks] = row;
+    const size = 17 + 4 * version;
+
+    // Build data bits: mode(4) + charcount + bytes + terminator
+    const bits = [];
+    const push = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+    push(0b0100, 4);         // byte mode
+    push(len, version < 10 ? 8 : 16);
+    for (const b of bytes) push(b, 8);
+    for (let i = 0; i < 4 && bits.length < dataCW * 8; i++) bits.push(0); // terminator
+    while (bits.length % 8) bits.push(0);
+    // Pad codewords
+    const padSeq = [0xEC, 0x11];
+    let pi = 0;
+    while (bits.length < dataCW * 8) { push(padSeq[pi++ % 2], 8); }
+
+    // Convert bits to codewords
+    const dataCWArr = [];
+    for (let i = 0; i < dataCW; i++) {
+      let b = 0;
+      for (let j = 0; j < 8; j++) b = (b << 1) | bits[i * 8 + j];
+      dataCWArr.push(b);
+    }
+
+    // RS error correction (split into blocks if needed)
+    const blockSize = Math.floor(dataCW / numBlocks);
+    const extraBlocks = dataCW % numBlocks;
+    const dataBlocks = [], ecBlocks = [];
+    let pos = 0;
+    for (let b = 0; b < numBlocks; b++) {
+      const blen = blockSize + (b < extraBlocks ? 1 : 0);
+      const block = dataCWArr.slice(pos, pos + blen); pos += blen;
+      dataBlocks.push(block);
+      ecBlocks.push(rsEncode(block, ecPerBlock));
+    }
+
+    // Interleave
+    const allCW = [];
+    const maxBlock = Math.max(...dataBlocks.map(b => b.length));
+    for (let i = 0; i < maxBlock; i++)
+      for (const b of dataBlocks) if (i < b.length) allCW.push(b[i]);
+    for (let i = 0; i < ecPerBlock; i++)
+      for (const b of ecBlocks) allCW.push(b[i]);
+
+    // Build module grid (null = unset, true/false = module)
+    const grid = Array.from({length: size}, () => new Array(size).fill(null));
+    const func = Array.from({length: size}, () => new Array(size).fill(false));
+
+    const set = (r, c, v, f = true) => { grid[r][c] = v; func[r][c] = f; };
+
+    // Finder patterns
+    function finder(tr, tc) {
+      for (let i = 0; i < 7; i++) for (let j = 0; j < 7; j++) {
+        const border = i === 0 || i === 6 || j === 0 || j === 6;
+        const inner  = i >= 2 && i <= 4 && j >= 2 && j <= 4;
+        set(tr + i, tc + j, border || inner, true);
+      }
+    }
+    finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+
+    // Separators (white)
+    const sepCoords = [
+      [7, 0, 8, 0, 1, 0, 8], [0, 7, 0, 8, 1, 8, 0],
+    ];
+    for (let i = 0; i < 8; i++) {
+      set(7, i, false); set(i, 7, false);
+      set(7, size - 8 + i, false); set(i, size - 8, false);
+      set(size - 8, i, false); set(size - 8 + i, 7, false);
+    }
+    set(7, 7, false);
+    set(7, size - 8, false);
+    set(size - 8, 7, false);
+
+    // Timing patterns
+    for (let i = 8; i < size - 8; i++) {
+      set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0);
+    }
+
+    // Dark module
+    set(size - 8, 8, true);
+
+    // Alignment patterns
+    const aligns = ALIGN[version] || [];
+    for (const r of aligns) for (const c of aligns) {
+      if (func[r][c]) continue;
+      for (let i = -2; i <= 2; i++) for (let j = -2; j <= 2; j++) {
+        const border = Math.abs(i) === 2 || Math.abs(j) === 2;
+        const center = i === 0 && j === 0;
+        set(r + i, c + j, border || center, true);
+      }
+    }
+
+    // Format information placeholders
+    const fmtPos = [];
+    for (let i = 0; i <= 5; i++) fmtPos.push([8, i], [i, 8]);
+    fmtPos.push([8, 7], [8, 8], [7, 8]);
+    for (let i = size - 7; i < size; i++) fmtPos.push([8, i], [i, 8]);
+    for (const [r, c] of fmtPos) func[r][c] = true;
+
+    // Data placement
+    let bitIdx = 0;
+    const allBits = [];
+    for (const cw of allCW) for (let i = 7; i >= 0; i--) allBits.push((cw >> i) & 1);
+
+    let up = true;
+    let col = size - 1;
+    while (col > 0) {
+      if (col === 6) col--;
+      for (let i = 0; i < size; i++) {
+        const row = up ? size - 1 - i : i;
+        for (let dc = 0; dc <= 1; dc++) {
+          const c = col - dc;
+          if (!func[row][c]) {
+            grid[row][c] = bitIdx < allBits.length ? allBits[bitIdx++] : false;
+          }
+        }
+      }
+      col -= 2;
+      up = !up;
+    }
+
+    // Choose best mask (evaluate penalty)
+    const MASKS = [
+      (r, c) => (r + c) % 2 === 0,
+      (r, c) =>  r % 2 === 0,
+      (r, c) =>  c % 3 === 0,
+      (r, c) => (r + c) % 3 === 0,
+      (r, c) => (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0,
+      (r, c) => (r * c) % 2 + (r * c) % 3 === 0,
+      (r, c) => ((r * c) % 2 + (r * c) % 3) % 2 === 0,
+      (r, c) => ((r + c) % 2 + (r * c) % 3) % 2 === 0,
+    ];
+
+    function applyMask(g, maskFn) {
+      const m = g.map(row => row.slice());
+      for (let r = 0; r < size; r++)
+        for (let c = 0; c < size; c++)
+          if (!func[r][c]) m[r][c] = g[r][c] ^ maskFn(r, c);
+      return m;
+    }
+
+    function penalty(g) {
+      let p = 0;
+      // Rule 1: 5+ in a row
+      for (let r = 0; r < size; r++) {
+        let run = 1;
+        for (let c = 1; c < size; c++) {
+          if (g[r][c] === g[r][c-1]) run++;
+          else { if (run >= 5) p += run - 2; run = 1; }
+        }
+        if (run >= 5) p += run - 2;
+      }
+      for (let c = 0; c < size; c++) {
+        let run = 1;
+        for (let r = 1; r < size; r++) {
+          if (g[r][c] === g[r-1][c]) run++;
+          else { if (run >= 5) p += run - 2; run = 1; }
+        }
+        if (run >= 5) p += run - 2;
+      }
+      // Rule 2: 2x2 blocks
+      for (let r = 0; r < size - 1; r++)
+        for (let c = 0; c < size - 1; c++)
+          if (g[r][c] === g[r][c+1] && g[r][c] === g[r+1][c] && g[r][c] === g[r+1][c+1]) p += 3;
+      return p;
+    }
+
+    let bestMask = 0, bestPenalty = Infinity, bestGrid = null;
+    for (let m = 0; m < 8; m++) {
+      const mg = applyMask(grid, MASKS[m]);
+      const pen = penalty(mg);
+      if (pen < bestPenalty) { bestPenalty = pen; bestMask = m; bestGrid = mg; }
+    }
+
+    // Write format info (QR spec section 8.9)
+    // fmtBits[0] = MSB (bit 14), fmtBits[14] = LSB (bit 0)
+    const fmt = FORMAT_M[bestMask];
+    const fmtBits = [];
+    for (let i = 14; i >= 0; i--) fmtBits.push((fmt >> i) & 1);
+
+    // Copy 1: around top-left finder
+    // Horizontal part: row 8, cols 0-8 (skipping col 6 timing)
+    const hCols = [0,1,2,3,4,5,7,8];           // 8 positions, bits 0-7
+    for (let i = 0; i < hCols.length; i++) bestGrid[8][hCols[i]] = fmtBits[i];
+    // Vertical part: col 8, rows 7 down to 0 (skipping row 6 timing)
+    const vRows = [7,5,4,3,2,1,0];              // 7 positions, bits 8-14
+    for (let i = 0; i < vRows.length; i++) bestGrid[vRows[i]][8] = fmtBits[8 + i];
+
+    // Copy 2: bottom-left + top-right
+    // Bottom-left: col 8, rows size-7 to size-1 (bits 0-6, LSB at top)
+    for (let i = 0; i < 7; i++) bestGrid[size - 7 + i][8] = fmtBits[6 - i];
+    // Top-right: row 8, cols size-8 to size-1 (bits 7-14)
+    for (let i = 0; i < 8; i++) bestGrid[8][size - 8 + i] = fmtBits[7 + i];
+
+    // Render SVG
+    const moduleSize = 120 / (size + 8); // 4-module quiet zone each side
+    const offset = 4 * moduleSize;
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" shape-rendering="crispEdges">`;
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (bestGrid[r][c]) {
+          const x = (c * moduleSize + offset).toFixed(2);
+          const y = (r * moduleSize + offset).toFixed(2);
+          const s = moduleSize.toFixed(2);
+          svg += `<rect x="${x}" y="${y}" width="${s}" height="${s}" fill="#949AA5"/>`;
+        }
+      }
+    }
+    svg += '</svg>';
+
+    document.getElementById('qr-container').innerHTML = svg;
+  }
+
+  function renderPlaceholder(msg) {
+    document.getElementById('qr-container').innerHTML =
+      `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+        <rect width="120" height="120" fill="none" stroke="#949AA5" stroke-width="1"/>
+        <text x="60" y="55" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#949AA5">QR</text>
+        <text x="60" y="72" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#7D828D">${msg}</text>
+      </svg>`;
+  }
+
+  try {
+    encodeQR('https://138ventures.com/mw');
+  } catch(e) {
+    renderPlaceholder('138ventures.com/mw');
+  }
+})();
+</script>
+
+</body>
+</html>

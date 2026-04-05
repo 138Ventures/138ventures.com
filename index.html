@@ -162,6 +162,18 @@
 
   .location { font-family: var(--sans); font-weight: 300; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-dim); }
 
+  .descriptor {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    opacity: 0;
+    animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.7s forwards;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
   .footer {
     padding: 1.5rem 4vw;
     display: flex;
@@ -172,6 +184,8 @@
     animation: fadeIn 1s ease 2s forwards;
   }
   .footer span { font-family: var(--sans); font-weight: 300; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-quiet); }
+  .footer a { font-family: var(--sans); font-weight: 300; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-quiet); text-decoration: none; transition: color 0.4s; }
+  .footer a:hover { color: var(--text); }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -189,13 +203,14 @@
 <body>
 
 <div class="page">
+  <!-- Header mark — re-enable when site has multiple pages
   <header class="header">
     <div class="mark">
       <span class="mark-num"><span class="w4">1</span><span class="w6">3</span><span class="w7">8</span></span>
       <span class="mark-v">Ventures</span>
     </div>
-    <a class="header-email" id="eml" href="#">·</a>
   </header>
+  -->
 
   <main class="main">
     <div class="identity-block">
@@ -208,11 +223,12 @@
     <div class="info">
       <div class="location">Singapore</div>
     </div>
+    <div class="descriptor">Strategic advisory for financial institutions and their principals</div>
   </main>
 
   <div class="footer">
     <span>&copy; 2026 138 Ventures Pte. Ltd.</span>
-    <span>Advisory &amp; Investment</span>
+    <a id="eml" href="#">·</a>
   </div>
 </div>
 

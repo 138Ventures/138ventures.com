@@ -183,16 +183,19 @@
     opacity: 0;
     animation: fadeIn 1s ease 2s forwards;
   }
-  .footer span { font-family: var(--sans); font-weight: 300; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-quiet); }
-  .footer a { font-family: var(--sans); font-weight: 300; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-quiet); text-decoration: none; transition: color 0.4s; }
+  .footer span { font-family: var(--sans); font-weight: 300; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-dim); }
+  .footer a { font-family: var(--sans); font-weight: 300; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--text-dim); text-decoration: none; transition: color 0.4s; }
   .footer a:hover { color: var(--text); }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+  .mobile-break { display: none; }
+
   @media (max-width: 600px) {
     .header { padding: 1.5rem; }
     .footer { padding: 1.5rem; }
+    .mobile-break { display: inline; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -223,7 +226,7 @@
     <div class="info">
       <div class="location">Singapore</div>
     </div>
-    <div class="descriptor">Strategic advisory for financial institutions and their principals</div>
+    <div class="descriptor">Strategic advisory for financial institutions<br class="mobile-break"> and their principals</div>
   </main>
 
   <div class="footer">
